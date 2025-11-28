@@ -72,6 +72,91 @@
   }
 
   /**
+   * 제목과 내용에서 카테고리 자동 생성
+   */
+  function generateCategoryFromContent(title, content) {
+    const titleLower = (title || "").toLowerCase();
+    const contentLower = (content || "").toLowerCase().substring(0, 500); // 처음 500자만 확인
+
+    // AI 관련
+    if (
+      titleLower.includes("ai") ||
+      titleLower.includes("인공지능") ||
+      titleLower.includes("머신러닝") ||
+      titleLower.includes("딥러닝") ||
+      titleLower.includes("machine learning") ||
+      titleLower.includes("deep learning") ||
+      contentLower.includes("ai") ||
+      contentLower.includes("인공지능")
+    ) {
+      return "AI";
+    }
+
+    // 개발/코드 관련
+    if (
+      titleLower.includes("코드") ||
+      titleLower.includes("code") ||
+      titleLower.includes("개발") ||
+      titleLower.includes("development") ||
+      titleLower.includes("프로그래밍") ||
+      titleLower.includes("programming") ||
+      titleLower.includes("리뷰") ||
+      titleLower.includes("review") ||
+      contentLower.includes("코드 리뷰") ||
+      contentLower.includes("code review")
+    ) {
+      return "Development";
+    }
+
+    // 교육/학습 관련
+    if (
+      titleLower.includes("학습") ||
+      titleLower.includes("learning") ||
+      titleLower.includes("공부") ||
+      titleLower.includes("study") ||
+      titleLower.includes("교육") ||
+      titleLower.includes("education") ||
+      titleLower.includes("가이드") ||
+      titleLower.includes("guide") ||
+      contentLower.includes("학습") ||
+      contentLower.includes("공부")
+    ) {
+      return "Education";
+    }
+
+    // 금융/주식/코인 관련
+    if (
+      titleLower.includes("주식") ||
+      titleLower.includes("stock") ||
+      titleLower.includes("코인") ||
+      titleLower.includes("crypto") ||
+      titleLower.includes("비트코인") ||
+      titleLower.includes("bitcoin") ||
+      titleLower.includes("금융") ||
+      titleLower.includes("finance") ||
+      titleLower.includes("시장") ||
+      titleLower.includes("market") ||
+      contentLower.includes("주식") ||
+      contentLower.includes("코인")
+    ) {
+      return "Finance";
+    }
+
+    // 기술/테크 관련
+    if (
+      titleLower.includes("기술") ||
+      titleLower.includes("tech") ||
+      titleLower.includes("기술") ||
+      titleLower.includes("technology")
+    ) {
+      return "Technology";
+    }
+
+    // 기본값
+    return "General";
+  }
+
+  /**
    * Front Matter 파싱
    */
   function parseFrontMatter(content) {
@@ -188,16 +273,15 @@
       dateEl.textContent = formatDate(metadata.date);
     }
 
-    // 카테고리
+    // 카테고리 (항상 표시)
     const categoryEl = document.getElementById("post-category");
     if (categoryEl) {
-      if (metadata.category && metadata.category.trim() !== "") {
-        categoryEl.textContent = metadata.category;
-        categoryEl.style.display = "inline"; // 표시
-      } else {
-        categoryEl.textContent = "General"; // 기본값
-        categoryEl.style.display = "inline"; // 항상 표시
-      }
+      const category =
+        metadata.category && metadata.category.trim() !== ""
+          ? metadata.category.trim()
+          : "General";
+      categoryEl.textContent = category;
+      categoryEl.style.display = "inline-block"; // 항상 표시
     }
 
     // 태그
@@ -300,6 +384,14 @@
         mergedMetadata.title.trim() === ""
       ) {
         mergedMetadata.title = generateTitleFromFilename(filename);
+      }
+
+      // 카테고리가 없으면 자동 생성
+      if (!mergedMetadata.category || mergedMetadata.category.trim() === "") {
+        mergedMetadata.category = generateCategoryFromContent(
+          mergedMetadata.title || filename,
+          content
+        );
       }
 
       // 메타데이터 렌더링

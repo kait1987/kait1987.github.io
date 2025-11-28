@@ -85,21 +85,78 @@ const posts = files.map((filename) => {
     .substring(0, 200)
     .trim();
 
-  // 카테고리가 없으면 기본값 설정
+  // 카테고리가 없으면 자동 생성
   let category = metadata.category || '';
   if (!category || category.trim() === '') {
-    // 파일명이나 제목에서 카테고리 추론 시도
     const title = metadata.title || filename.replace('.md', '');
-    if (title.toLowerCase().includes('ai') || title.toLowerCase().includes('인공지능')) {
+    const titleLower = title.toLowerCase();
+    const contentLower = postContent.toLowerCase().substring(0, 500); // 처음 500자만 확인
+
+    // AI 관련
+    if (
+      titleLower.includes('ai') ||
+      titleLower.includes('인공지능') ||
+      titleLower.includes('머신러닝') ||
+      titleLower.includes('딥러닝') ||
+      titleLower.includes('machine learning') ||
+      titleLower.includes('deep learning') ||
+      contentLower.includes('ai') ||
+      contentLower.includes('인공지능')
+    ) {
       category = 'AI';
-    } else if (title.toLowerCase().includes('코드') || title.toLowerCase().includes('code') || title.toLowerCase().includes('개발')) {
+    }
+    // 개발/코드 관련
+    else if (
+      titleLower.includes('코드') ||
+      titleLower.includes('code') ||
+      titleLower.includes('개발') ||
+      titleLower.includes('development') ||
+      titleLower.includes('프로그래밍') ||
+      titleLower.includes('programming') ||
+      titleLower.includes('리뷰') ||
+      titleLower.includes('review')
+    ) {
       category = 'Development';
-    } else if (title.toLowerCase().includes('학습') || title.toLowerCase().includes('learning') || title.toLowerCase().includes('공부')) {
+    }
+    // 교육/학습 관련
+    else if (
+      titleLower.includes('학습') ||
+      titleLower.includes('learning') ||
+      titleLower.includes('공부') ||
+      titleLower.includes('study') ||
+      titleLower.includes('교육') ||
+      titleLower.includes('education') ||
+      titleLower.includes('가이드') ||
+      titleLower.includes('guide')
+    ) {
       category = 'Education';
-    } else if (title.toLowerCase().includes('주식') || title.toLowerCase().includes('stock') || title.toLowerCase().includes('코인') || title.toLowerCase().includes('crypto')) {
+    }
+    // 금융/주식/코인 관련
+    else if (
+      titleLower.includes('주식') ||
+      titleLower.includes('stock') ||
+      titleLower.includes('코인') ||
+      titleLower.includes('crypto') ||
+      titleLower.includes('비트코인') ||
+      titleLower.includes('bitcoin') ||
+      titleLower.includes('금융') ||
+      titleLower.includes('finance') ||
+      titleLower.includes('시장') ||
+      titleLower.includes('market')
+    ) {
       category = 'Finance';
-    } else {
-      category = 'General'; // 기본값
+    }
+    // 기술/테크 관련
+    else if (
+      titleLower.includes('기술') ||
+      titleLower.includes('tech') ||
+      titleLower.includes('technology')
+    ) {
+      category = 'Technology';
+    }
+    // 기본값
+    else {
+      category = 'General';
     }
   }
 

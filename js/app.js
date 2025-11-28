@@ -44,13 +44,32 @@
             .map(tag => `<span class="post-card-tag">${escapeHtml(tag)}</span>`)
             .join('');
 
+        // 카테고리가 없으면 자동 생성
+        let category = post.category;
+        if (!category || category.trim() === '') {
+            const title = post.title || post.file.replace('.md', '');
+            const titleLower = title.toLowerCase();
+            
+            if (titleLower.includes('ai') || titleLower.includes('인공지능')) {
+                category = 'AI';
+            } else if (titleLower.includes('코드') || titleLower.includes('code') || titleLower.includes('개발') || titleLower.includes('리뷰')) {
+                category = 'Development';
+            } else if (titleLower.includes('학습') || titleLower.includes('learning') || titleLower.includes('공부') || titleLower.includes('가이드')) {
+                category = 'Education';
+            } else if (titleLower.includes('주식') || titleLower.includes('stock') || titleLower.includes('코인') || titleLower.includes('crypto') || titleLower.includes('시장')) {
+                category = 'Finance';
+            } else {
+                category = 'General';
+            }
+        }
+
         return `
             <article class="post-card">
                 <a href="post.html?file=${encodeURIComponent(post.file)}" class="post-card-link">
                     <h2 class="post-card-title">${escapeHtml(post.title)}</h2>
                     <div class="post-card-meta">
                         <time class="post-card-date">${formatDate(post.date)}</time>
-                        ${post.category ? `<span class="post-card-category">${escapeHtml(post.category)}</span>` : ''}
+                        <span class="post-card-category">${escapeHtml(category)}</span>
                     </div>
                     <p class="post-card-excerpt">${escapeHtml(post.excerpt || post.description || '')}</p>
                     ${tagsHtml ? `<div class="post-card-tags">${tagsHtml}</div>` : ''}

@@ -9,6 +9,15 @@
     "excerpt": "---\r title: '블로그에 오신 것을 환영합니다!'\r date: 2025-01-26\r tags: \r category: 'General'\r description: '이 블로그의 첫 번째 게시글입니다. GitHub Pages와 마크다운으로 만들어진 정적 블로그를 소개합니다.'\r ---\r \r \r \r 이 블로그에 오신 것을 환영합니다. 이 블로그는 를 사용하..."
   },
   {
+    "file": "effective-code-review.md",
+    "title": "effective-code-review",
+    "date": "2025-11-28",
+    "tags": [],
+    "category": "",
+    "description": "",
+    "excerpt": "---\r title: '효과적인 코드 리뷰를 위한 실전 가이드'\r date: 2025-01-26\r tags: \r category: 'Development'\r description: '코드 리뷰를 통해 코드 품질을 높이고 팀 협업을 개선하는 실용적인 방법을 소개합니다.'\r ---\r \r \r \r 코드 리뷰는 단순히 버그를 찾는 것이 아니라, 코드 품질을 향상시키..."
+  },
+  {
     "file": "ai-learning-guide.md",
     "title": "ai-learning-guide",
     "date": "2025-11-28",

@@ -7,6 +7,7 @@
 
     let allPosts = [];
     let currentTag = null;
+    let currentCategory = null;
 
     /**
      * 게시글 목록 fetch
@@ -88,10 +89,15 @@
 
         if (noPostsMsg) noPostsMsg.style.display = 'none';
 
-        // 현재 태그 필터 적용
+        // 현재 카테고리 및 태그 필터 적용
         let filteredPosts = posts;
+        if (currentCategory) {
+            filteredPosts = filteredPosts.filter(post => 
+                post.category === currentCategory
+            );
+        }
         if (currentTag) {
-            filteredPosts = posts.filter(post => 
+            filteredPosts = filteredPosts.filter(post => 
                 post.tags && post.tags.includes(currentTag)
             );
         }
@@ -103,6 +109,65 @@
         }
 
         container.innerHTML = filteredPosts.map(createPostCard).join('');
+    }
+
+    /**
+     * 카테고리 필터 생성
+     */
+    function renderCategories(posts) {
+        const container = document.getElementById('categories-container');
+        if (!container) return;
+
+        // 모든 카테고리 수집 및 중복 제거
+        const categorySet = new Set();
+        posts.forEach(post => {
+            if (post.category && post.category.trim() !== '') {
+                categorySet.add(post.category);
+            }
+        });
+
+        if (categorySet.size === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        const categories = Array.from(categorySet).sort();
+        
+        // "전체" 버튼 + 카테고리 버튼들
+        const categoriesHtml = `
+            <button class="category-filter active" data-category="">전체</button>
+            ${categories.map(cat => `<button class="category-filter" data-category="${escapeHtml(cat)}">${escapeHtml(cat)}</button>`).join('')}
+        `;
+
+        container.innerHTML = categoriesHtml;
+
+        // 카테고리 클릭 이벤트
+        container.querySelectorAll('.category-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 활성 상태 토글
+                container.querySelectorAll('.category-filter').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // 카테고리 필터 적용
+                currentCategory = btn.dataset.category || null;
+                renderPosts(allPosts);
+
+                // 검색 및 태그 초기화
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) searchInput.value = '';
+                
+                // 태그 필터도 초기화
+                const tagsContainer = document.getElementById('tags-container');
+                if (tagsContainer) {
+                    const allTagBtn = tagsContainer.querySelector('[data-tag=""]');
+                    if (allTagBtn) {
+                        tagsContainer.querySelectorAll('.tag-filter').forEach(b => b.classList.remove('active'));
+                        allTagBtn.classList.add('active');
+                        currentTag = null;
+                    }
+                }
+            });
+        });
     }
 
     /**
@@ -149,6 +214,8 @@
                 // 검색 초기화
                 const searchInput = document.getElementById('search-input');
                 if (searchInput) searchInput.value = '';
+                
+                // 카테고리 필터는 유지
             });
         });
     }
@@ -158,6 +225,9 @@
      */
     async function init() {
         allPosts = await fetchPosts();
+        
+        // 카테고리 필터 렌더링
+        renderCategories(allPosts);
         
         // 태그 필터 렌더링
         renderTags(allPosts);

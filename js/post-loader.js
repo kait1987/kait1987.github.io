@@ -119,8 +119,9 @@
     // 제목
     const titleEl = document.getElementById("post-title");
     if (titleEl) {
-      titleEl.textContent = metadata.title || "Untitled";
-      document.title = `${metadata.title || "Post"} - kait1987's Blog`;
+      const title = metadata.title || "게시글";
+      titleEl.textContent = title;
+      document.title = `${title} - kait1987's Blog`;
     }
 
     // 날짜
@@ -198,6 +199,21 @@
     }
 
     try {
+      // posts.json에서 제목 가져오기 시도
+      let postsMetadata = {};
+      try {
+        const postsResponse = await fetch("posts.json");
+        if (postsResponse.ok) {
+          const posts = await postsResponse.json();
+          const post = posts.find((p) => p.file === filename);
+          if (post) {
+            postsMetadata = post;
+          }
+        }
+      } catch (e) {
+        console.warn("Failed to load posts.json:", e);
+      }
+
       const response = await fetch(`pages/${filename}`);
 
       if (!response.ok) {
@@ -207,8 +223,19 @@
       const rawContent = await response.text();
       const { metadata, content } = parseFrontMatter(rawContent);
 
+      // posts.json의 메타데이터와 Front Matter 메타데이터 병합 (Front Matter 우선)
+      const mergedMetadata = {
+        ...postsMetadata,
+        ...metadata,
+      };
+
+      // 제목이 없으면 파일명에서 추출
+      if (!mergedMetadata.title) {
+        mergedMetadata.title = filename.replace(".md", "").replace(/-/g, " ");
+      }
+
       // 메타데이터 렌더링
-      renderMetadata(metadata);
+      renderMetadata(mergedMetadata);
 
       // 마크다운 → HTML 변환
       const html = renderMarkdown(content);

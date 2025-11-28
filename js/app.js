@@ -114,23 +114,51 @@
     /**
      * 카테고리 필터 생성
      */
-    function renderCategories(posts) {
+    async function renderCategories(posts) {
         const container = document.getElementById('categories-container');
         if (!container) return;
 
         // 모든 카테고리 수집 및 중복 제거
         const categorySet = new Set();
+        
+        // posts.json에서 카테고리 수집
         posts.forEach(post => {
             if (post.category && post.category.trim() !== '') {
                 categorySet.add(post.category);
             }
         });
 
+        // posts.json에 카테고리가 없으면 마크다운 파일에서 직접 읽기
         if (categorySet.size === 0) {
-            container.style.display = 'none';
-            return;
+            for (const post of posts) {
+                try {
+                    const response = await fetch(`pages/${post.file}`);
+                    if (response.ok) {
+                        const content = await response.text();
+                        const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n/);
+                        if (frontMatterMatch) {
+                            const frontMatter = frontMatterMatch[1];
+                            const categoryMatch = frontMatter.match(/^category:\s*(.+)$/m);
+                            if (categoryMatch) {
+                                let category = categoryMatch[1].trim();
+                                // 따옴표 제거
+                                if ((category.startsWith('"') && category.endsWith('"')) ||
+                                    (category.startsWith("'") && category.endsWith("'"))) {
+                                    category = category.slice(1, -1);
+                                }
+                                if (category) {
+                                    categorySet.add(category);
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn(`Failed to load category from ${post.file}:`, e);
+                }
+            }
         }
 
+        // 카테고리가 없어도 "전체" 버튼은 항상 표시
         const categories = Array.from(categorySet).sort();
         
         // "전체" 버튼 + 카테고리 버튼들
@@ -140,6 +168,7 @@
         `;
 
         container.innerHTML = categoriesHtml;
+        container.style.display = 'flex'; // 항상 표시
 
         // 카테고리 클릭 이벤트
         container.querySelectorAll('.category-filter').forEach(btn => {
@@ -226,8 +255,8 @@
     async function init() {
         allPosts = await fetchPosts();
         
-        // 카테고리 필터 렌더링
-        renderCategories(allPosts);
+        // 카테고리 필터 렌더링 (비동기)
+        await renderCategories(allPosts);
         
         // 태그 필터 렌더링
         renderTags(allPosts);

@@ -116,7 +116,10 @@
      */
     async function renderCategories(posts) {
         const container = document.getElementById('categories-container');
-        if (!container) return;
+        if (!container) {
+            console.error('categories-container not found');
+            return;
+        }
 
         // 모든 카테고리 수집 및 중복 제거
         const categorySet = new Set();
@@ -130,7 +133,8 @@
 
         // posts.json에 카테고리가 없으면 마크다운 파일에서 직접 읽기
         if (categorySet.size === 0) {
-            for (const post of posts) {
+            console.log('No categories in posts.json, reading from markdown files...');
+            const promises = posts.map(async (post) => {
                 try {
                     const response = await fetch(`pages/${post.file}`);
                     if (response.ok) {
@@ -138,16 +142,19 @@
                         const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n/);
                         if (frontMatterMatch) {
                             const frontMatter = frontMatterMatch[1];
-                            const categoryMatch = frontMatter.match(/^category:\s*(.+)$/m);
-                            if (categoryMatch) {
-                                let category = categoryMatch[1].trim();
-                                // 따옴표 제거
-                                if ((category.startsWith('"') && category.endsWith('"')) ||
-                                    (category.startsWith("'") && category.endsWith("'"))) {
-                                    category = category.slice(1, -1);
-                                }
-                                if (category) {
-                                    categorySet.add(category);
+                            const lines = frontMatter.split('\n');
+                            for (const line of lines) {
+                                if (line.trim().startsWith('category:')) {
+                                    let category = line.split(':').slice(1).join(':').trim();
+                                    // 따옴표 제거
+                                    if ((category.startsWith('"') && category.endsWith('"')) ||
+                                        (category.startsWith("'") && category.endsWith("'"))) {
+                                        category = category.slice(1, -1);
+                                    }
+                                    if (category) {
+                                        categorySet.add(category);
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -155,11 +162,13 @@
                 } catch (e) {
                     console.warn(`Failed to load category from ${post.file}:`, e);
                 }
-            }
+            });
+            await Promise.all(promises);
         }
 
         // 카테고리가 없어도 "전체" 버튼은 항상 표시
         const categories = Array.from(categorySet).sort();
+        console.log('Categories found:', categories);
         
         // "전체" 버튼 + 카테고리 버튼들
         const categoriesHtml = `
@@ -169,6 +178,8 @@
 
         container.innerHTML = categoriesHtml;
         container.style.display = 'flex'; // 항상 표시
+        
+        console.log('Categories rendered:', container.innerHTML);
 
         // 카테고리 클릭 이벤트
         container.querySelectorAll('.category-filter').forEach(btn => {
@@ -253,9 +264,11 @@
      * 앱 초기화
      */
     async function init() {
+        console.log('Initializing app...');
         allPosts = await fetchPosts();
+        console.log('Posts loaded:', allPosts.length);
         
-        // 카테고리 필터 렌더링 (비동기)
+        // 카테고리 필터 렌더링 (비동기) - 먼저 실행
         await renderCategories(allPosts);
         
         // 태그 필터 렌더링
@@ -268,6 +281,8 @@
         if (window.SearchManager) {
             window.SearchManager.init(allPosts);
         }
+        
+        console.log('App initialized');
     }
 
     // DOM 준비되면 초기화

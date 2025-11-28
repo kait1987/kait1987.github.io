@@ -7,5 +7,14 @@
     "category": "",
     "description": "",
     "excerpt": "---\r title: '블로그에 오신 것을 환영합니다!'\r date: 2025-01-26\r tags: \r category: 'General'\r description: '이 블로그의 첫 번째 게시글입니다. GitHub Pages와 마크다운으로 만들어진 정적 블로그를 소개합니다.'\r ---\r \r \r \r 이 블로그에 오신 것을 환영합니다. 이 블로그는 를 사용하..."
+  },
+  {
+    "file": "ai-learning-guide.md",
+    "title": "ai-learning-guide",
+    "date": "2025-11-28",
+    "tags": [],
+    "category": "",
+    "description": "",
+    "excerpt": "---\r title: 'AI를 수월하게 공부하는 방법'\r date: 2025-01-26\r tags: \r category: 'Education'\r description: 'AI 학습을 효율적으로 시작하고 지속하는 실용적인 방법론을 소개합니다.'\r ---\r \r \r \r AI(인공지능) 분야는 빠르게 발전하고 있어, 체계적인 학습 방법이 중요합니다. 이 글에서는"
   }
 ]

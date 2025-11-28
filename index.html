@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kait1987's Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/prism.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <a href="index.html" class="logo">kait1987's Blog</a>
+                <nav class="nav">
+                    <button id="theme-toggle" class="theme-btn" aria-label="테마 변경">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="search-section">
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        class="search-input" 
+                        placeholder="게시글 검색..."
+                        aria-label="게시글 검색"
+                    >
+                </div>
+            </section>
+
+            <section class="tags-section" id="tags-container">
+                <!-- 태그 필터가 동적으로 생성됩니다 -->
+            </section>
+
+            <section class="posts-section">
+                <div id="posts-list" class="posts-list">
+                    <!-- 게시글 목록이 동적으로 생성됩니다 -->
+                </div>
+                <div id="loading" class="loading">
+                    <span>게시글을 불러오는 중...</span>
+                </div>
+                <div id="no-posts" class="no-posts" style="display: none;">
+                    <span>게시글이 없습니다.</span>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 kait1987. Powered by GitHub Pages.</p>
+        </footer>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading... - kait1987's Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/prism.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <a href="index.html" class="logo">kait1987's Blog</a>
+                <nav class="nav">
+                    <button id="theme-toggle" class="theme-btn" aria-label="테마 변경">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main post-main">
+            <article class="post-article">
+                <header class="post-header">
+                    <h1 id="post-title" class="post-title">Loading...</h1>
+                    <div class="post-meta">
+                        <time id="post-date" class="post-date"></time>
+                        <span id="post-category" class="post-category"></span>
+                    </div>
+                    <div id="post-tags" class="post-tags">
+                        <!-- 태그가 동적으로 생성됩니다 -->
+                    </div>
+                </header>
+
+                <div id="post-content" class="post-content">
+                    <div class="loading">
+                        <span>게시글을 불러오는 중...</span>
+                    </div>
+                </div>
+            </article>
+
+            <section id="giscus-container" class="comments-section">
+                <!-- Giscus 댓글이 여기에 로드됩니다 -->
+            </section>
+
+            <nav class="post-nav">
+                <a href="index.html" class="back-link">← 목록으로 돌아가기</a>
+            </nav>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 kait1987. Powered by GitHub Pages.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/post-loader.js"></script>
+</body>
+</html>
+

@@ -20,7 +20,7 @@ const posts = files.map((filename) => {
   const content = fs.readFileSync(filePath, 'utf8');
 
   // Front Matter 파싱
-  const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  const frontMatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
   let metadata = {};
   let postContent = content;
 
@@ -31,12 +31,15 @@ const posts = files.map((filename) => {
     // Front Matter 라인 파싱
     const lines = frontMatter.split('\n');
     lines.forEach((line) => {
-      const colonIndex = line.indexOf(':');
+      const trimmedLine = line.trim();
+      if (!trimmedLine || trimmedLine.startsWith('#')) return; // 빈 줄이나 주석 건너뛰기
+      
+      const colonIndex = trimmedLine.indexOf(':');
       if (colonIndex > 0) {
-        const key = line.substring(0, colonIndex).trim();
-        let value = line.substring(colonIndex + 1).trim();
+        const key = trimmedLine.substring(0, colonIndex).trim();
+        let value = trimmedLine.substring(colonIndex + 1).trim();
 
-        // 따옴표 제거
+        // 따옴표 제거 (단일 또는 이중 따옴표)
         if (
           (value.startsWith('"') && value.endsWith('"')) ||
           (value.startsWith("'") && value.endsWith("'"))
@@ -56,10 +59,19 @@ const posts = files.map((filename) => {
           }
         }
 
-        metadata[key] = value;
+        // 카테고리도 따옴표 제거 확인
+        if (key === 'category' && value) {
+          // 이미 따옴표가 제거되었지만, 혹시 모를 경우를 대비
+          value = value.replace(/^['"]|['"]$/g, '').trim();
+        }
+
+        if (key && value !== undefined && value !== null) {
+          metadata[key] = value;
+        }
       }
     });
   }
+  
 
   // 발췌문 생성 (첫 200자)
   const excerpt = postContent
@@ -73,12 +85,30 @@ const posts = files.map((filename) => {
     .substring(0, 200)
     .trim();
 
+  // 카테고리가 없으면 기본값 설정
+  let category = metadata.category || '';
+  if (!category || category.trim() === '') {
+    // 파일명이나 제목에서 카테고리 추론 시도
+    const title = metadata.title || filename.replace('.md', '');
+    if (title.toLowerCase().includes('ai') || title.toLowerCase().includes('인공지능')) {
+      category = 'AI';
+    } else if (title.toLowerCase().includes('코드') || title.toLowerCase().includes('code') || title.toLowerCase().includes('개발')) {
+      category = 'Development';
+    } else if (title.toLowerCase().includes('학습') || title.toLowerCase().includes('learning') || title.toLowerCase().includes('공부')) {
+      category = 'Education';
+    } else if (title.toLowerCase().includes('주식') || title.toLowerCase().includes('stock') || title.toLowerCase().includes('코인') || title.toLowerCase().includes('crypto')) {
+      category = 'Finance';
+    } else {
+      category = 'General'; // 기본값
+    }
+  }
+
   return {
     file: filename,
     title: metadata.title || filename.replace('.md', ''),
     date: metadata.date || new Date().toISOString().split('T')[0],
     tags: Array.isArray(metadata.tags) ? metadata.tags : [],
-    category: metadata.category || '',
+    category: category,
     description: metadata.description || '',
     excerpt: excerpt + (excerpt.length === 200 ? '...' : ''),
   };

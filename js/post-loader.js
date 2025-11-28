@@ -190,8 +190,14 @@
 
     // 카테고리
     const categoryEl = document.getElementById("post-category");
-    if (categoryEl && metadata.category) {
-      categoryEl.textContent = metadata.category;
+    if (categoryEl) {
+      if (metadata.category && metadata.category.trim() !== "") {
+        categoryEl.textContent = metadata.category;
+        categoryEl.style.display = "inline"; // 표시
+      } else {
+        categoryEl.textContent = "General"; // 기본값
+        categoryEl.style.display = "inline"; // 항상 표시
+      }
     }
 
     // 태그

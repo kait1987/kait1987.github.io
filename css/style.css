@@ -400,7 +400,13 @@ a:hover {
 
 .post-category {
     color: var(--color-accent);
-    font-weight: 500;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+    color: white;
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    display: inline-block;
 }
 
 .post-tags {

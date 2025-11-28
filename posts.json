@@ -1,38 +1,58 @@
 [
   {
+    "file": "ai-stock-crypto-news-2025-11-25.md",
+    "title": "AI·주식·코인 시장 최신 동향 (2025년 11월 25일)",
+    "date": "2025-11-25",
+    "tags": [
+      "AI",
+      "Stock Market",
+      "Cryptocurrency",
+      "News",
+      "Market Analysis"
+    ],
+    "category": "Finance",
+    "description": "AI 기업 동향, 주식 시장 움직임, 암호화폐 시장 상황을 종합 분석한 최신 시장 리포트입니다.",
+    "excerpt": "최근 AI 기술 발전, 주식 시장 변동성, 암호화폐 시장 동향을 종합적으로 분석했습니다.\r \r \r \r \r \r \r \r Google이 글로벌 AI 경쟁에서 \"완전히 깨어났다\"는 평가를 받고 있습니다. 인터넷 거대 기업은 새로운 AI 소프트웨어를 출시하고 Anthropic PBC와의 칩 협력 등 거래를 통해 투자자들에게 안심을 주고 있습니다.\r \r :\r - :"
+  },
+  {
     "file": "example.md",
-    "title": "example",
-    "date": "2025-11-28",
-    "tags": [],
-    "category": "",
-    "description": "",
-    "excerpt": "---\r title: '블로그에 오신 것을 환영합니다!'\r date: 2025-01-26\r tags: \r category: 'General'\r description: '이 블로그의 첫 번째 게시글입니다. GitHub Pages와 마크다운으로 만들어진 정적 블로그를 소개합니다.'\r ---\r \r \r \r 이 블로그에 오신 것을 환영합니다. 이 블로그는 를 사용하..."
+    "title": "블로그에 오신 것을 환영합니다!",
+    "date": "2025-01-26",
+    "tags": [
+      "Welcome",
+      "Blog",
+      "GitHub Pages"
+    ],
+    "category": "General",
+    "description": "이 블로그의 첫 번째 게시글입니다. GitHub Pages와 마크다운으로 만들어진 정적 블로그를 소개합니다.",
+    "excerpt": "이 블로그에 오신 것을 환영합니다. 이 블로그는 를 사용하여 호스팅되며, 순수 HTML, CSS, JavaScript로 구축되었습니다.\r \r \r \r 이 블로그는 다음과 같은 기능을 제공합니다:\r \r - 🌙 : 우측 상단의 버튼으로 테마를 전환할 수 있습니다\r - 🔍 : 게시글 제목, 내용, 태그로 검색 가능합니다\r - 🏷️ : 태그를 클릭하여 관련 게..."
   },
   {
     "file": "effective-code-review.md",
-    "title": "effective-code-review",
-    "date": "2025-11-28",
-    "tags": [],
-    "category": "",
-    "description": "",
-    "excerpt": "---\r title: '효과적인 코드 리뷰를 위한 실전 가이드'\r date: 2025-01-26\r tags: \r category: 'Development'\r description: '코드 리뷰를 통해 코드 품질을 높이고 팀 협업을 개선하는 실용적인 방법을 소개합니다.'\r ---\r \r \r \r 코드 리뷰는 단순히 버그를 찾는 것이 아니라, 코드 품질을 향상시키..."
-  },
-  {
-    "file": "ai-stock-crypto-news-2025-11-25.md",
-    "title": "ai-stock-crypto-news-2025-11-25",
-    "date": "2025-11-28",
-    "tags": [],
-    "category": "",
-    "description": "",
-    "excerpt": "---\r title: 'AI·주식·코인 시장 최신 동향 (2025년 11월 25일)'\r date: 2025-11-25\r tags: \r category: 'Finance'\r description: 'AI 기업 동향, 주식 시장 움직임, 암호화폐 시장 상황을 종합 분석한 최신 시장 리포트입니다.'\r ---\r \r \r \r 최근 AI 기술 발전, 주식 시장 변동성,..."
+    "title": "효과적인 코드 리뷰를 위한 실전 가이드",
+    "date": "2025-01-26",
+    "tags": [
+      "Code Review",
+      "Best Practices",
+      "Development",
+      "Teamwork"
+    ],
+    "category": "Development",
+    "description": "코드 리뷰를 통해 코드 품질을 높이고 팀 협업을 개선하는 실용적인 방법을 소개합니다.",
+    "excerpt": "코드 리뷰는 단순히 버그를 찾는 것이 아니라, 코드 품질을 향상시키고 팀원 간 지식을 공유하는 중요한 프로세스입니다. 이 글에서는 효과적인 코드 리뷰를 위한 실전 팁과 모범 사례를 소개합니다.\r \r \r \r 코드 리뷰는 다음과 같은 목적을 가집니다:\r \r 1. : 코드 실행 전 잠재적 문제점 파악\r 2. : 가독성, 유지보수성 개선\r 3. : 팀원 간 기술과..."
   },
   {
     "file": "ai-learning-guide.md",
-    "title": "ai-learning-guide",
-    "date": "2025-11-28",
-    "tags": [],
-    "category": "",
-    "description": "",
-    "excerpt": "---\r title: 'AI를 수월하게 공부하는 방법'\r date: 2025-01-26\r tags: \r category: 'Education'\r description: 'AI 학습을 효율적으로 시작하고 지속하는 실용적인 방법론을 소개합니다.'\r ---\r \r \r \r AI(인공지능) 분야는 빠르게 발전하고 있어, 체계적인 학습 방법이 중요합니다. 이 글에서는"
+    "title": "AI를 수월하게 공부하는 방법",
+    "date": "2025-01-26",
+    "tags": [
+      "AI",
+      "Learning",
+      "Study",
+      "Guide"
+    ],
+    "category": "Education",
+    "description": "AI 학습을 효율적으로 시작하고 지속하는 실용적인 방법론을 소개합니다.",
+    "excerpt": "AI(인공지능) 분야는 빠르게 발전하고 있어, 체계적인 학습 방법이 중요합니다. 이 글에서는 AI 학습을 효율적으로 시작하고 지속할 수 있는 실용적인 방법들을 소개합니다.\r \r \r \r \r \r AI를 이해하기 위해서는 기본적인 수학 지식이 필요합니다:\r \r - : 벡터, 행렬 연산\r - : 기울기, 최적화\r - : 확률 분포, 베이즈 정리\r \r 하지만 모든"
   }
 ]

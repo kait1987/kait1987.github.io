@@ -14,6 +14,64 @@
   }
 
   /**
+   * 파일명에서 의미있는 제목 생성
+   */
+  function generateTitleFromFilename(filename) {
+    // .md 확장자 제거
+    let title = filename.replace(/\.md$/, "");
+
+    // 하이픈을 공백으로 변경
+    title = title.replace(/-/g, " ");
+
+    // 날짜 형식 변환 (YYYY-MM-DD → YYYY년 MM월 DD일)
+    title = title.replace(
+      /(\d{4})-(\d{1,2})-(\d{1,2})/g,
+      (match, year, month, day) => {
+        return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
+      }
+    );
+
+    // 일반적인 약어/키워드를 한국어로 변환
+    const translations = {
+      ai: "AI",
+      code: "코드",
+      review: "리뷰",
+      guide: "가이드",
+      learning: "학습",
+      effective: "효과적인",
+      stock: "주식",
+      crypto: "코인",
+      news: "뉴스",
+      market: "시장",
+      latest: "최신",
+      trends: "동향",
+      example: "예시",
+      welcome: "환영",
+    };
+
+    // 단어별로 변환
+    const words = title.split(" ");
+    const translatedWords = words.map((word) => {
+      const lowerWord = word.toLowerCase();
+      if (translations[lowerWord]) {
+        return translations[lowerWord];
+      }
+      // 첫 글자 대문자 (한글이 아닌 경우)
+      if (/^[a-z]/.test(word)) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }
+      return word;
+    });
+
+    title = translatedWords.join(" ");
+
+    // 공백 정리
+    title = title.replace(/\s+/g, " ").trim();
+
+    return title || "게시글";
+  }
+
+  /**
    * Front Matter 파싱
    */
   function parseFrontMatter(content) {
@@ -229,9 +287,13 @@
         ...metadata,
       };
 
-      // 제목이 없으면 파일명에서 추출
-      if (!mergedMetadata.title) {
-        mergedMetadata.title = filename.replace(".md", "").replace(/-/g, " ");
+      // 제목이 없거나 "Untitled"면 파일명에서 의미있는 제목 생성
+      if (
+        !mergedMetadata.title ||
+        mergedMetadata.title === "Untitled" ||
+        mergedMetadata.title.trim() === ""
+      ) {
+        mergedMetadata.title = generateTitleFromFilename(filename);
       }
 
       // 메타데이터 렌더링
